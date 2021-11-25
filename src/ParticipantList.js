@@ -15,6 +15,17 @@ class ParticipantList extends React.Component {
 
     addParticipant = (participants) => {
         let participant = this.textInput.current.value;
+        if (participant === null || participant === "") {
+            alert("Podano niepoprawne imię uczestnika!");
+            return;
+        }
+        if (Object.values(participants).indexOf(participant) > -1) {
+            alert("Podany uczestnik już został dodany!");
+            return;
+        }
+        if (participant.includes("dupa")) {
+            alert("Elegancja francja");
+        }
         let newParticipants = participants.slice(0, participants.size);
         newParticipants.push(participant);
         this.textInput.current.value = "";
@@ -28,12 +39,12 @@ class ParticipantList extends React.Component {
 
     generate = (participants) => {
         if (participants.length < 1) {
-            alert("No participants available!");
+            alert("Brak uczestników!");
             this.setState({pairs : []});
             return;
         }
         if (participants.length % 2 !== 0) {
-            alert("Number of participants is not even!");
+            alert("Liczba uczestników jest nieparzysta!");
             this.setState({pairs : []});
             return;
         }
@@ -65,44 +76,67 @@ class ParticipantList extends React.Component {
     render() {
         return (
             <>
-                <div className="Div-main">
-                    <div>
-                        <div>
-                            <label>Name</label>
-                            <input id="participant" name="participant" type="text" ref={this.textInput}></input>
-                            <button name="send" onClick={this.addParticipant.bind(this, this.state.participants)}>Add</button>
+                <div className="jumbotron jumbotron-fluid">
+                    <div className="container bg-light">
+                        <h1>Świąteczne losowanie</h1>
+                        <div className="input-group">
+                            <input className="form-control" placeholder="Uczestnik" aria-label="Uczestnik" id="participant" name="participant" type="text" ref={this.textInput}></input>
+                            <div className="input-group-append">
+                                <button className="btn btn-outline-primary" name="send" onClick={this.addParticipant.bind(this, this.state.participants)}>Add</button>
+                            </div>
                         </div>
                         <div>
-                            <p>Participants list:</p>
-                            <ul>
+                            <h3>Uczestnicy:</h3>
+                            <ul className="list-group">
+                                {this.state.participants === null || this.state.participants.length === 0 ? <h5>Brak uczestników</h5> : <></>}
                                 {this.state.participants.map((participant, index) => (
-                                    <li key={index} id={`participant` + index}>
-                                        {participant}
-                                        <button onClick={this.deleteParticipant.bind(this, index, this.state.participants)}>X</button>
+                                    <li className="list-group-item list-group-item-action" key={index} id={`participant` + index}>
+                                        <div className="row">
+                                            <div className="col-md">
+                                                <span>{participant}</span>
+                                            </div>
+                                            <div className="col-md"></div>
+                                            <div className="col-sm">
+                                                <button type="button" className="btn btn-danger" onClick={this.deleteParticipant.bind(this, index, this.state.participants)} aria-label="Close">
+                                                    Usuń
+                                                </button>
+                                            </div>
+                                        </div>
                                     </li>
                                     ))
                                 }
                             </ul>
                         </div>
-                        <div>
-                            <button onClick={this.generate.bind(this, this.state.participants)}>Generate</button>
-                            <button onClick={this.reset.bind(this)}>Reset</button>
+                        <div className="form-input">
+                            <button className="btn btn-primary" onClick={this.generate.bind(this, this.state.participants)}>Losuj</button>
+                            <button className="btn btn-secondary" onClick={this.reset.bind(this)}>Wyczyść</button>
                         </div>
                         <div ref={this.pairsSection}>
-                            <p>Pairs:</p>
-                            <ul>
+                            <h3>Pary:</h3>
+                            <ul className="list-group">
+                                {this.state.pairs === null || this.state.pairs.length === 0 ? <h5>Brak par, dodaj uczestników i kliknij przycisk losuj</h5> : <></>}
                                 {this.state.pairs.map((pair, index) => (
-                                    <li key={index} id={`pair` + index}>
-                                        {pair.first.participant} - {pair.second.participant}
+                                    <li className="list-group-item" key={index} id={`pair` + index}>
+                                        <div className="row">
+                                            <div className="col-md">
+                                                {pair.first.participant}
+                                            </div>
+                                            <div className="col-sm">
+                                                - 
+                                            </div>
+                                            <div className="col-md">
+                                            {pair.second.participant}
+                                            </div>
+                                        </div>   
                                     </li>
                                     ))
                                 }
                             </ul>
                         </div>
-                        <div className="Div-footer">
-                            <footer>Made by Jacek Noga</footer>
+                        <div className="align-bottom">
+                            <footer>Made by Jacor</footer>
                         </div>
-                    </div>
+                    </div>   
                 </div>
             </>
         );

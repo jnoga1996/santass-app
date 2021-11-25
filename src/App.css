@@ -1,13 +1,6 @@
-body {
-  padding: 0;
-  margin: 0;
-}
-
 .App {
   text-align: center;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
+  height: 100%;
 }
 
 .App-logo {
