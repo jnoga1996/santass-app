@@ -1,0 +1,30 @@
+.my-image {
+    padding: 1%;
+    height: 30%;
+    width: 45%;
+}
+
+.my-btn {
+    margin-top: 1%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.my-input-group {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.my-span {
+    text-align:center;
+    vertical-align:central;
+}
+
+.my-list {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.my-remove-btn {
+    float: right;
+}
